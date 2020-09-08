@@ -57,7 +57,7 @@ class CqlFormer:
         ================
         return: self
         '''
-        if type(rel)==dict:
+        if type(rel)==str:
             self.cql["match"]["rel"]={"relName":rel,"nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
         elif type(rel)==list:
             if len(rel)==1:
