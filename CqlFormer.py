@@ -9,12 +9,12 @@ import time
 class CqlFormer:
 
     def __init__(self,
-                host="http://XXX:7474/",
+                host="http://test.tki.oa.com:7474/",
                 userName="neo4j",
-                pwd="neo4j",
+                pwd="www.neo4j.com0700",
                 idNameList=["OrgID","RtxName"]):
         ''' 
-        host:"http://XXX:7474/";
+        host:"http://test.tki.oa.com:7474/";
         userName:"neo4j"
         pwd:"neo4j"
         '''
@@ -205,8 +205,9 @@ class CqlFormer:
         self.tmpList=[]
         if type(self.cql["match"]["rel"])==dict:
             if len(self.cql["match"]["rel"])==0:
-                matchStr="MATCH ({subNickName}),({objNickName})".format(subNickName=subNickName,
-                                                                        objNickName=objNickName)
+                soStrList=["({subNickName})".format(subNickName=subNickName) if len(self.cql["match"]["sub"]["IDName"])>0 else "",
+                           "({objNickName})".format(objNickName=objNickName) if len(self.cql["match"]["obj"]["IDName"])>0 else ""]
+                matchStr="MATCH {soStr}".format(soStr="".join(soStrList))
             else:
                 relNickName=self.cql["match"]["rel"]["nickName"]
                 relName=self.cql["match"]["rel"]["relName"]
@@ -271,7 +272,7 @@ if __name__=="__main__":
 
 
     # %%
-    myCF.getRel(["knows"]).getObj(name="Alex").getReturn()
+    myCF.getSub(name="Amy").getReturn(sro=[],att=["s.Age"])
 
 
     # %%
