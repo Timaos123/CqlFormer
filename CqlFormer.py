@@ -9,12 +9,12 @@ import time
 class CqlFormer:
 
     def __init__(self,
-                host="http://test.tki.oa.com:7474/",
+                host="http://XXX:7474/",
                 userName="neo4j",
-                pwd="www.neo4j.com0700",
+                pwd="XXX",
                 idNameList=["OrgID","RtxName"]):
         ''' 
-        host:"http://test.tki.oa.com:7474/";
+        host:"http://XXX:7474/";
         userName:"neo4j"
         pwd:"neo4j"
         '''
