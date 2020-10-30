@@ -272,9 +272,7 @@ class CqlFormer:
         return pd.DataFrame(self.graph.run(self.mwrStr).data()).drop_duplicates()
  
 if __name__=="__main__":
-    myCF=CqlFormer(host="http://test.tki.oa.com:7474/browser/",
-                    userName="neo4j",
-                    pwd="www.neo4j.com0700")
+    myCF=CqlFormer()
 
     print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).outputCypher())
     print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).run())
