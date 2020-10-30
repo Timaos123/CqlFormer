@@ -9,9 +9,9 @@ import time
 class CqlFormer:
 
     def __init__(self,
-                host="http://XXX:7474/",
+                host="http://test.tki.oa.com:7474/browser/",
                 userName="neo4j",
-                pwd="XXX",
+                pwd="www.neo4j.com0700",
                 idNameList=["OrgID","RtxName"]):
         ''' 
         host:"http://XXX:7474/";
@@ -37,8 +37,9 @@ class CqlFormer:
         ================
         return: self
         '''
-        idName=list(sub.keys())[0]
-        self.cql["match"]["sub"]={"IDName":idName,"IDValue":sub[idName],"nickName":"sub{}".format(abs(hash(sub[idName]+str(time.time()))))}
+        if len(sub)!=0:
+            idName=list(sub.keys())[0]
+            self.cql["match"]["sub"]={"IDName":idName,"IDValue":sub[idName],"nickName":"sub{}".format(abs(hash(sub[idName]+str(time.time()))))}
         return self
     
     def getObj(self,**obj):
@@ -47,8 +48,9 @@ class CqlFormer:
         ================
         return: self
         '''
-        idName=list(obj.keys())[0]
-        self.cql["match"]["obj"]={"IDName":idName,"IDValue":obj[idName],"nickName":"obj{}".format(abs(hash(obj[idName]+str(time.time()))))}
+        if len(obj)!=0:
+            idName=list(obj.keys())[0]
+            self.cql["match"]["obj"]={"IDName":idName,"IDValue":obj[idName],"nickName":"obj{}".format(abs(hash(obj[idName]+str(time.time()))))}
         return self
 
     def getRel(self,rel):
@@ -58,7 +60,8 @@ class CqlFormer:
         return: self
         '''
         if type(rel)==str:
-            self.cql["match"]["rel"]={"relName":rel,"nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
+            if rel!="":
+                self.cql["match"]["rel"]={"relName":rel,"nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
         elif type(rel)==list:
             if len(rel)==1:
                 self.cql["match"]["rel"]={"relName":rel[0],"nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
@@ -272,8 +275,7 @@ if __name__=="__main__":
 
 
     # %%
-    myCF.getSub(name="Amy").getReturn(sro=[],att=["s.Age"])
-
+    myCF.getSub(name="Amy").getRel("").getObj().getReturn(sro=[],att=["s.Age"])
 
     # %%
     print(myCF.outputCypher())
