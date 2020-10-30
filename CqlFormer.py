@@ -274,5 +274,5 @@ class CqlFormer:
 if __name__=="__main__":
     myCF=CqlFormer()
 
-    print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).outputCypher())
-    print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).run())
+    print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).outputCypher()) # 展示cypher
+    print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).run()) # 展示cypher运行结果
