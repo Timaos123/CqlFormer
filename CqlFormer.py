@@ -53,15 +53,17 @@ class CqlFormer:
             self.cql["match"]["obj"]={"IDName":idName,"IDValue":obj[idName],"nickName":"obj{}".format(abs(hash(obj[idName]+str(time.time()))))}
         return self
 
-    def getRel(self,rel):
+    def getRel(self,rel=None):
         '''
         rel:relation name (eg."memberOf")
         ================
         return: self
         '''
-        if type(rel)==str:
-            if rel!="":
+        if type(rel)==str or rel is None:
+            if rel!="" and rel is not None:
                 self.cql["match"]["rel"]={"relName":rel,"nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
+            else:
+                self.cql["match"]["rel"]={"relName":"","nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
         elif type(rel)==list:
             if len(rel)==1:
                 self.cql["match"]["rel"]={"relName":rel[0],"nickName":"rel{}".format(abs(hash("relName"+str(time.time()))))}
@@ -267,17 +269,12 @@ class CqlFormer:
     
     def run(self):
         self.buildCypher()
-        return pd.DataFrame(self.graph.run(self.mwrStr).data())
-
+        return pd.DataFrame(self.graph.run(self.mwrStr).data()).drop_duplicates()
+ 
 if __name__=="__main__":
-    # %%
-    myCF=CqlFormer()
+    myCF=CqlFormer(host="http://test.tki.oa.com:7474/browser/",
+                    userName="neo4j",
+                    pwd="www.neo4j.com0700")
 
-
-    # %%
-    myCF.getSub(name="Amy").getRel("").getObj().getReturn(sro=[],att=["s.Age"])
-
-    # %%
-    print(myCF.outputCypher())
-    print(myCF.outputJson())
-    print(myCF.run())
+    print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).outputCypher())
+    print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).run())
