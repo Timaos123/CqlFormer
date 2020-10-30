@@ -269,10 +269,21 @@ class CqlFormer:
     
     def run(self):
         self.buildCypher()
+        self.cql={
+            "match":{
+                "sub":{},#{"IDName":"","IDValue":"","nickName":""}
+                "rel":{},#{"relName":"","nickName":""}
+                "obj":{},#{"IDName":"","IDValue":"","nickName":""}
+            },
+            "where":"",
+            "return":[],
+        }
         return pd.DataFrame(self.graph.run(self.mwrStr).data()).drop_duplicates()
  
 if __name__=="__main__":
     myCF=CqlFormer()
 
     print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).outputCypher()) # 展示cypher
+    print(myCF.outputCypher()) # 展示cypher
     print(myCF.getSub(name="Amy").getRel().getObj().getReturn(sro=[],att=["s.Age"],agg=[]).run()) # 展示cypher运行结果
+    print(myCF.outputCypher()) # 查看删除结果
