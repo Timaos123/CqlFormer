@@ -233,7 +233,7 @@ class CqlFormer:
                     self.tmpList.append("tmp{}".format(relI))
                     relList.append("(tmp{})".format(relI))
             relStr="-".join(relList)
-            matchStr="MATCH ({subNickName})-{relStr}->({objNickName})".format(subNickName=subNickName,
+            matchStr="MATCH ({subNickName})-[{relStr}]->({objNickName})".format(subNickName=subNickName,
                                                                                 relStr=relStr,
                                                                                 objNickName=objNickName)
 
