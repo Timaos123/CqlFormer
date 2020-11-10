@@ -243,12 +243,12 @@ class CqlFormer:
         objIdValue=self.cql["match"]["obj"]["IDValue"]
         whereList=[]
         if len(subIdName)>0:
-            subConStr="{subNickName}.{subIdName}='{subIdValue}'".format(subNickName=subNickName,
+            subConStr="{subNickName}.{subIdName}=~'(?i){subIdValue}'".format(subNickName=subNickName,
                                                                         subIdName=subIdName,
                                                                         subIdValue=subIdValue)
             whereList.append("{subConStr}".format(subConStr=subConStr))
         if len(objIdName)>0:
-            objConStr="{objNickName}.{objIdName}='{objIdValue}'".format(objNickName=objNickName,
+            objConStr="{objNickName}.{objIdName}=~'(?i){objIdValue}'".format(objNickName=objNickName,
                                                                         objIdName=objIdName,
                                                                         objIdValue=objIdValue)
             whereList.append("{objConStr}".format(objConStr=objConStr))
